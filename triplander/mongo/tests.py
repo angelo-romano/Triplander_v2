@@ -1,5 +1,6 @@
 import unittest
-from triplander.models.geo import Country
+# from triplander.models.geo import Country
+
 
 class TestMongo(unittest.TestCase):
     instance = None
@@ -8,7 +9,6 @@ class TestMongo(unittest.TestCase):
     def setUp(self):
         #self.instance = MyTestModule()
         self.inserted_entries = set()
-        
+
     def tearDown(self):
         self.instance.update
-        

@@ -28,10 +28,11 @@ def migrate_country(entry):
         additional_corresp_map = {
             'old_pk': entry['pk'],
             'old_capitalcity_pk': entry['fields']['capital_city'],
-        } 
+        }
+
     except KeyError:
         raise RuntimeError(u"Invalid JSON configuration: %s" % str(entry))
-    
+
     country = Country.find_one({'code': entry['fields']['code']})
     if not country:
         country = Country()
@@ -81,7 +82,7 @@ def migrate_city(entry):
         city[k] = v
 
     city.save()
-        
+
     return city
 
 
@@ -128,7 +129,8 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Migrates a PostgreSQL JSON to MongoDB style.')
+    parser = argparse.ArgumentParser(
+                 description='Migrates a PostgreSQL JSON to MongoDB style.')
     parser.add_argument("path", help="An alternate path to the JSON file",
                         default=FILE_PATH, nargs='?')
 

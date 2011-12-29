@@ -3,6 +3,7 @@ Miscellaneous functions for MongoDB side.
 """
 import math
 
+
 def get_bounding_box(latitude, longitude, distance, distance_fmt="km"):
     """
     Calculates a bounding box from latitude, longitude and given distance.
@@ -13,7 +14,7 @@ def get_bounding_box(latitude, longitude, distance, distance_fmt="km"):
         half_side = distance / 1000.0
     elif distance_fmt == "miles":
         half_side = distance / 1.609344
- 
+
     lat = math.radians(latitude)
     lon = math.radians(longitude)
 

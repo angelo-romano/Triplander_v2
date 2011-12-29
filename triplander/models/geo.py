@@ -3,7 +3,6 @@ Geo-related models.
 """
 import mongokit
 from pymongo.objectid import ObjectId
-from triplander.mongo import settings
 from triplander.mongo.base import MONGODB_CONNECTION, ModelDocument
 
 
@@ -24,6 +23,7 @@ class Country(ModelDocument):
     i18n = ['name']
 
     indexes = [
+       {'fields': ['name.value'], 'check': False},
        {'fields': ['slug'], 'unique': True},
        {'fields': ['code'], 'unique': True},
        {'fields': ['capital_city'], 'unique': True},
@@ -46,8 +46,9 @@ class Region(ModelDocument):
     }
 
     i18n = ['name']
-    
+
     indexes = [
+       {'fields': ['name.value'], 'check': False},
        {'fields': ['slug'], 'unique': True},
        {'fields': [('coordinates', mongokit.INDEX_GEO2D)], 'check': False},
        {'fields': ['countries']},
@@ -72,13 +73,14 @@ class City(ModelDocument):
     }
 
     i18n = ['name']
-    
+
     indexes = [
+       {'fields': ['name.value'], 'check': False},
        {'fields': ['slug']},  # 'unique': True,
        {'fields': [('coordinates', mongokit.INDEX_GEO2D)]},
        {'fields': ['country']},
     ]
-    
+
     required_fields = ["name", "slug"]
     default_values = {
         "total_ranking": 0.0,

@@ -9,7 +9,8 @@ from triplander.views.home import Root, CityView
 def setup_routes():
     d = cherrypy.dispatch.RoutesDispatcher()
     d.connect('home', '/', controller=Root(), action='index')
-    d.connect(None, '/city/{slug}', controller=CityView(), action='get_by_slug')
+    d.connect(None, '/city/{slug}', controller=CityView(),
+              action='get_by_slug')
     dispatcher = d
     return dispatcher
 

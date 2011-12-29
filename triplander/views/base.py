@@ -2,9 +2,10 @@ from jinja2 import Environment, FileSystemLoader
 
 template_env = Environment(loader=FileSystemLoader('triplander/templates'))
 
+
 class BaseView(object):
     template_name = None
-    
+
     @property
     def template(self):
         if not self.template_name:
