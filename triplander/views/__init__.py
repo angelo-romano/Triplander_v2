@@ -3,26 +3,31 @@ Root view package.
 """
 import cherrypy
 import os
-from triplander.views.home import Root, CityView
-
+import triplander
+from triplander.views.home import Root, CityView, AJAXSearchView
+from triplander.urls import site_urls
 
 def setup_routes():
     d = cherrypy.dispatch.RoutesDispatcher()
-    d.connect('home', '/', controller=Root(), action='index')
-    d.connect(None, '/city/{slug}', controller=CityView(),
-              action='get_by_slug')
+    for this_url in site_urls:
+        this_url.connect_to_dispatcher(d)
+
     dispatcher = d
     return dispatcher
 
 urlconf = {
-    '/': {
-        'request.dispatch': setup_routes()
+    'global': {
+        'server.socket_host': '0.0.0.0',
+        'server.socket_port': 8080,
     },
-    '/static': {
+    '/': {
+        'request.dispatch': setup_routes(),
+    },
+    '/media': {
         'tools.staticdir.on': True,
-        'tools.staticdir.root': os.path.dirname(os.path.abspath(__file__)),
-        'tools.staticdir.dir': 'static'
+        'tools.staticdir.root': os.path.dirname(os.path.abspath(triplander.__file__)),
+        'tools.staticdir.dir': 'media',
     }
 }
 
-__all__ = ['urlconf']
+__all__ = ['urlconf', 'Root', 'CityView', 'AJAXSearchView']

@@ -28,6 +28,10 @@ class Country(ModelDocument):
        {'fields': ['code'], 'unique': True},
        {'fields': ['capital_city'], 'unique': True},
     ]
+    
+    relations = [
+       ("capital_city", "City"),
+    ]
 
     required_fields = ["name", "wikiname", "slug", "code"]
 
@@ -79,6 +83,10 @@ class City(ModelDocument):
        {'fields': ['slug']},  # 'unique': True,
        {'fields': [('coordinates', mongokit.INDEX_GEO2D)]},
        {'fields': ['country']},
+    ]
+
+    relations = [
+       ("country", "Country"),
     ]
 
     required_fields = ["name", "slug"]

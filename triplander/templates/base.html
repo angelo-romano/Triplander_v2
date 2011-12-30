@@ -3,11 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     {% block head %}
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/media/css/main.css" />
     <title>{% block title %}{% endblock %} - Triplander.com</title>
     {% endblock %}
 </head>
 <body>
+	<div id="header">
+		<div id="logo"></div>
+	</div>
     <div id="content">{% block content %}{% endblock %}</div>
     <div id="footer">
         {% block footer %}

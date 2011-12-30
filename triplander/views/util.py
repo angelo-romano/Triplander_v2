@@ -2,6 +2,17 @@ import cherrypy
 import routes
 
 
+def map_method_to_dict(func, args, kwargs):
+    retval = kwargs
+    fn_code = func.__code__
+    varnames = fn_code.co_varnames[1:]  # exclude 'self'
+    for idx in xrange(len(args)):
+        key, val = varnames[idx], args[idx]
+        retval[key] = val
+        
+    return retval
+
+
 class _ctrlchain(object):
 
     def __init__(self, name, head=None):
