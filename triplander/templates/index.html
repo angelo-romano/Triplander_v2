@@ -1,5 +1,36 @@
 {% extends "base.html" %}
+{% block extra_head %}
+<script type="text/javascript">
+$(function() {
+    $("#search_form input#search_city").autocomplete({
+        source: function(req, add) {
+            //pass request to server
+            $.getJSON("/ajax/city/by_prefix/" + $("#search_form input#search_city").val(),
+                      function(data) {
+                //create array for response objects
+                var suggestions = [];
+                //process response
+                $.each(data, function(i, val) {
+                    suggestions.push(val.name);
+                });
+                //pass array to callback
+                add(suggestions);
+        	});
+    	},
+        minLength: 2,
+        select: function( event, ui ) {
+            log( ui.item ?
+                "Selected: " + ui.item.value + " aka " + ui.item.id :
+                "Nothing selected, input was " + this.value );
+        }
+    });
+});
+</script>
+{% endblock %}
 {% block title %}Index{% endblock %}
 {% block content %}
-<p>{{ salutation }}, {{ target }}!</p>
+<form id="search_form">
+    <label for="search_city">City</label>
+    <input type="text" name="city" id="search_city" />
+</form>
 {% endblock %}

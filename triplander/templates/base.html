@@ -3,7 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     {% block head %}
-    <link rel="stylesheet" href="/media/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="/media/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="/media/css/blitzer/jquery-ui-1.8.16.custom.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/media/js/jquery-ui-1.8.16.custom.min.js"></script>
+    {% block extra_head %}{% endblock %}
     <title>{% block title %}{% endblock %} - Triplander.com</title>
     {% endblock %}
 </head>
