@@ -10,7 +10,7 @@ $(function() {
                       function(data) {
 				response($.map(data, function(item) {
 					var ccode = item.country_code;
-					return {label: '<img src="/media/img/flags/country_' + ccode + '.png" alt="Flag ' + ccode + '" /> ' + item.name,
+					return {label: item.label,
 						    value: item.name};
 				}));
 			});
