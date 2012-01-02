@@ -3,34 +3,31 @@
 <script type="text/javascript">
 $(function() {
     $("#search_form input#search_city").autocomplete({
-        source: function(req, add) {
+    	html: true,
+        source: function(request, response) {
             //pass request to server
             $.getJSON("/ajax/city/by_prefix/" + $("#search_form input#search_city").val(),
                       function(data) {
-                //create array for response objects
-                var suggestions = [];
-                //process response
-                $.each(data, function(i, val) {
-                    suggestions.push(val.name);
-                });
-                //pass array to callback
-                add(suggestions);
-        	});
+				response($.map(data, function(item) {
+					var ccode = item.country_code;
+					return {label: '<img src="/media/img/flags/country_' + ccode + '.png" alt="Flag ' + ccode + '" /> ' + item.name,
+						    value: item.name};
+				}));
+			});
     	},
-        minLength: 2,
-        select: function( event, ui ) {
-            log( ui.item ?
-                "Selected: " + ui.item.value + " aka " + ui.item.id :
-                "Nothing selected, input was " + this.value );
-        }
+        minLength: 2
     });
 });
+function redirect_to_city() {
+	window.location = "/city/" + $.slugify($("#search_city").val());
+}
 </script>
 {% endblock %}
 {% block title %}Index{% endblock %}
 {% block content %}
-<form id="search_form">
+<form id="search_form" onsubmit="return false;">
     <label for="search_city">City</label>
     <input type="text" name="city" id="search_city" />
+    <button class="okay_button" onclick="redirect_to_city();"></button>
 </form>
 {% endblock %}

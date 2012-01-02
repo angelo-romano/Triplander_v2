@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% block title %}City{% endblock %}
 {% block content %}
-<p>Slug {{ slug }}!</p>
+<div id="geo_title">
+<img class="flag" src="/media/img/flags/country_{{ country.code.lower() }}.png" alt="Flag of {{ country.name }}" />
+<p class="title">{{ city.name }}</p>
+</div>
+<div class="box">
+<p>Slug {{ city.slug }}!</p>
+</div>
 {% endblock %}

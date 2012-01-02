@@ -20,7 +20,12 @@ class CityView(BaseView):
 
     @cherrypy_action()
     def get_by_slug(self, slug):
-        return dict(slug=slug)
+        city = City.find_one({"slug": slug})
+        country = city.relation_set.country
+        return {
+            "city": city,
+            "country": country,
+        }
 
 
 class AJAXSearchView(BaseView):
@@ -30,7 +35,7 @@ class AJAXSearchView(BaseView):
         for city in City.find_prefix('name', prefix):
             yield {"name": city.name,
                    "slug": city.slug,
-                   "country": city.relation_set.country.name}
+                   "country_code": city.relation_set.country.code.lower()}
 
     def _get_countries_by_prefix(self, prefix):
         for country in Country.find_prefix('name', prefix):
